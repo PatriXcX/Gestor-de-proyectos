@@ -1,0 +1,20 @@
+{
+  "name": "project-promo-b-pt-module-4-team-2",
+  "version": "1.0.0",
+  "description": "gestión de proyectos molones II",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "author": "adalabers",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.0",
+    "dotenv": "^16.4.5",
+    "mysql2": "^3.11.3",
+    "vite": "^5.4.8"
+  }
+}
