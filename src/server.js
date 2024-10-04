@@ -12,7 +12,10 @@ function getServer() {
   server.listen( port, () => {
     console.log(`Servidor iniciado escuchando en http://localhost:${port}`);
   });
+  server.use(express.static('./public'));
   return server
 }
+
+
 
 module.exports = getServer;
