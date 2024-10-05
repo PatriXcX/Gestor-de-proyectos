@@ -1,9 +1,7 @@
-const getConnection = require('./db');
-const getServer = require('./server');
-
+const getConnection = require("./db");
+const getServer = require("./server");
 
 const server = getServer();
-
 
 // obtener todo el listado del proyecto de la base de datos
 server.get("/api/projectCard", async (req, res) => {
@@ -14,47 +12,40 @@ server.get("/api/projectCard", async (req, res) => {
     return;
   }
   // Lanzar una query
-  const [results] = await conn.query("SELECT * FROM autora, proyectos  WHERE idautora = autora_idautora;");
+  const [results] = await conn.query(
+    "SELECT * FROM autora, proyectos  WHERE idautora = autora_idautora;"
+  );
   // Devolvemos los resultados como JSON
   res.json(results);
   // Cerrar la conn
   await conn.close();
 });
 
-server.post ('/api/projectCard', async(req, res) => {
-
+server.post("/api/projectCard", async (req, res) => {
   const conn = await getConnection();
   if (!conn) {
     res.status(500).json({ success: false, error: "Error con la conexion." });
     return;
   }
-  const [results] = await conn.query('INSERT INTO `autora` (`nombre_autora`, `trabajo`, `foto_autora`) VALUES (?, ?, ?);',
-  [
-    req.body.autor,
-    req.body.job,
-    req.body.photo,
-    
-  ]);
+  const [results] = await conn.query(
+    "INSERT INTO `autora` (`nombre_autora`, `trabajo`, `foto_autora`) VALUES (?, ?, ?);",
+    [req.body.autor, req.body.job, req.body.photo]
+  );
 
-  const [result] = await conn.query('INSERT INTO `proyectos` (`autora_idautora`,`nombre_proyecto`, `slogan`, `repositorio`, `demo`, `tecnologias`, `descripcion`, `foto_proyecto` ) VALUES (?, ?, ?, ?, ?, ?, ?, ?);',
-  [
-    results.insertId,
-    req.body.name,
-    req.body.slogan,
-    req.body.repo,
-    req.body.demo,
-    req.body.technologies,
-    req.body.desc,
-    req.body.image,
-    
-    
-  ]);
-
+  const [result] = await conn.query(
+    "INSERT INTO `proyectos` (`autora_idautora`,`nombre_proyecto`, `slogan`, `repositorio`, `demo`, `tecnologias`, `descripcion`, `foto_proyecto` ) VALUES (?, ?, ?, ?, ?, ?, ?, ?);",
+    [
+      results.insertId,
+      req.body.name,
+      req.body.slogan,
+      req.body.repo,
+      req.body.demo,
+      req.body.technologies,
+      req.body.desc,
+      req.body.image,
+    ]
+  );
 
   console.log(result);
-  res.status(404).json({ message: 'proyecto no integrado correctamente' });
-
+  res.status(404).json({ message: "proyecto no integrado correctamente" });
 });
-
-
-
