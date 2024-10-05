@@ -5,7 +5,6 @@ function getServer() {
   const server = express();
 
   server.use(cors());
-  server.use(express.json());
   server.use(express.json({ limit: "10mb" }));
 
   const port = 4000;
