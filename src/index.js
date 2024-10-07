@@ -1,8 +1,10 @@
 const getConnection = require('./db');
 const getServer = require('./server');
-
+const cors = require("cors");
 
 const server = getServer();
+
+server.use(cors()); // Habilitar CORS para todas las rutas
 
 
 // obtener todo el listado del proyecto de la base de datos
@@ -16,6 +18,7 @@ server.get("/api/projectCard", async (req, res) => {
   // Lanzar una query
   const [results] = await conn.query("SELECT * FROM autora, proyectos  WHERE idautora = autora_idautora;");
   // Devolvemos los resultados como JSON
+  console.log("Resultados obtenidos de la base de datos:", results);
   res.json(results);
   // Cerrar la conn
   await conn.close();
@@ -55,6 +58,5 @@ server.post ('/api/projectCard', async(req, res) => {
   res.status(404).json({ message: 'proyecto no integrado correctamente' });
 
 });
-
 
 
