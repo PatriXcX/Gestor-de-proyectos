@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import avatarImage from "../images/avatar.webp";
-import ebookkExampleImagen from "../images/ebook-example.jpg";
-import gitHubIcon from "../images/icons/github.svg";
-import globeSolid from "../images/icons/globe-solid.svg";
+// import avatarImage from "../images/avatar.webp";
+// import ebookkExampleImagen from "../images/ebook-example.jpg";
+// import gitHubIcon from "../images/icons/github.svg";
+// import globeSolid from "../images/icons/globe-solid.svg";
 import Footer from "./Sections/Footer";
 import Header from "./Sections/Header";
 import CreateBtns from "./Sections/Buttons/Create-Btns";

@@ -1,6 +1,33 @@
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const LandingPage = ({info}) => {
+const LandingPage = () => {
+  const [projects, setProjects] = useState([]); // Estado para guardar los proyectos
+  const [loading, setLoading] = useState(true); // Estado para manejar el loading
+
+  // Hacer la llamada al backend para obtener los proyectos
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await fetch("http://localhost:4000/api/projectCard"); // Llamada a tu backend
+        const data = await response.json();
+        console.log("Datos recibidos desde el backend:", data);
+        setProjects(data); // Actualizar el estado con los proyectos obtenidos
+        setLoading(false); // Desactivar el loading una vez obtenidos los datos
+      } catch (error) {
+        // console.error("Error fetching projects:", error);
+        setLoading(false); // Desactivar el loading en caso de error
+      }
+    };
+
+    fetchProjects();
+  }, []); // Se ejecuta solo una vez al montar el componente
+
+  // Si está cargando, mostramos un mensaje
+  if (loading) {
+    return <p>Cargando proyectos...</p>;
+  }
+
   return (
     <div className="landing-page">
       <section className="hero">
@@ -12,99 +39,65 @@ const LandingPage = ({info}) => {
       <Link to="/create" className="button--link">
         Nuevo proyecto
       </Link>
-      <></>
-      <section className="preview landingPageCard ">
-        <article className="card">
-          <h2 className="card__projectTitle">
-            <span className="card__projectTitle--text">
-              Ficha De Proyecto Tenebroso
-            </span>
-          </h2>
 
-          <div className="card__author">
-            <p className="card__job">Tejiendo Código en las Sombras</p>
-            <div className="card__authorPhoto"
-						  style={{ backgroundImage: `url(${info.photo || "https://theobjective.com/wp-content/uploads/2020/10/morticia-portada-e1603540026942.png"})` }}
-					  ></div>
-            <h3 className="card__name">Morticia Addams</h3>
-          </div>
+      {/* Mapeamos los proyectos obtenidos de la base de datos */}
+      {projects.length > 0 ? (
+        <section className="preview landingPageCard">
+          {projects.map((project) => (
+            <article className="card" key={project.id_proyecto}>
+              <h2 className="card__projectTitle">
+                <span className="card__projectTitle--text">
+                  
+                  {project.nombre_proyecto}
+                </span>
+              </h2>
 
-          <div className="card__project">
-            <h3 className="card__name">Ficha De Proyecto Tenebroso</h3>
-            <p className="card__slogan">Diseños Exclusivos</p>
-            <h3 className="card__descriptionTitle">Elegante y macabro</h3>
-            <p className="card__description">
-              Un día sin oscuridad, es un día perdido.
-              En esta casa, lo tenebroso no asusta, lo ordinario sí.
-            </p>
+              <div className="card__author">
+                <p className="card__job">{project.trabajo}</p>
+                <div
+                  className="card__authorPhoto"
+                  style={{
+                    backgroundImage: `url(${project.foto_autora})`,
+                  }}
+                ></div>
+                <h3 className="card__name">{project.nombre_autora}</h3>
+              </div>
 
-            <div className="card__technicalInfo">
-              <p className="card__technologies">React JS - HTML - CSS</p>
+              <div className="card__project">
+                <h3 className="card__name">{project.nombre_proyecto}</h3>
+                <p className="card__slogan">{project.slogan}</p>
+                <h3 className="card__descriptionTitle">Descripción</h3>
+                <p className="card__description">{project.descripcion}</p>
 
-              <a
-                className="icon icon__www"
-                href="#"
-                title="Haz click para ver el proyecto online"
-              >
-                Web link
-              </a>
-              <a
-                className="icon icon__github"
-                href="#"
-                title="Haz click para ver el código del proyecto"
-              >
-                GitHub link
-              </a>
-            </div>
-          </div>
-        </article>
-      </section>
-      <section className="preview landingPageCard">
-        <article className="card">
-          <h2 className="card__projectTitle">
-            <span className="card__projectTitle--text">
-              Personal project card
-            </span>
-          </h2>
+                <div className="card__technicalInfo">
+                  <p className="card__technologies">{project.tecnologias}</p>
 
-          <div className="card__author">
-            <p className="card__job">Arquitecta de lo Oscuro</p>
-            <div className="card__authorPhoto"
-						  style={{ backgroundImage: `url(${info.photo || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmX0F7PmA6NIiZ2WB7n4rKy-RprgurWXsScYiXuysivV8V4heuWPlrKZxNBT9j8obwwJw&usqp=CAU"})` }}
-					  ></div>
-            <h3 className="card__name">Abuela Addams</h3>
-          </div>
-
-          <div className="card__project">
-            <h3 className="card__name">Ficha De Proyecto Tenebroso</h3>
-            <p className="card__slogan">Diseños Exclusivos</p>
-            <h3 className="card__descriptionTitle">La oscuridad nos guía</h3>
-            <p className="card__description">
-              Lo raro es normal.
-              La oscuridad nos ilumina.
-            </p>
-
-            <div className="card__technicalInfo">
-              <p className="card__technologies">React JS - HTML - CSS</p>
-
-              <a
-                className="icon icon__www"
-                href="#"
-                title="Haz click para ver el proyecto online"
-              >
-                Web link
-              </a>
-              <a
-                className="icon icon__github"
-                href="#"
-                title="Haz click para ver el código del proyecto"
-              >
-                GitHub link
-              </a>
-            </div>
-          </div>
-        </article>
-      </section>
+                  <a
+                    className="icon icon__www"
+                    href={project.demo}
+                    title="Haz click para ver el proyecto online"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Web link
+                  </a>
+                  <a
+                    className="icon icon__github"
+                    href={project.repositorio}
+                    title="Haz click para ver el código del proyecto"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    GitHub link
+                  </a>
+                </div>
+              </div>
+            </article>
+          ))}
+        </section>
+      ) : (
+        <p>No hay proyectos disponibles.</p>
+      )}
     </div>
   );
 };
