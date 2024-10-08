@@ -6,6 +6,7 @@ function getServer() {
 
   server.use(cors());
   server.use(express.json({ limit: "10mb" }));
+  server.use("view engine", "ejs");
 
   const port = 4000;
 
