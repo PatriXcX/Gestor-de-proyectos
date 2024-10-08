@@ -8,7 +8,7 @@ function getServer() {
   server.use(express.json({ limit: "10mb" }));
   server.set("view engine", "ejs");
 
-  const port = 4000;
+  const port = process.env.PORT || 4000;
 
   server.listen(port, () => {
     console.log(`Servidor iniciado escuchando en http://localhost:${port}`);
