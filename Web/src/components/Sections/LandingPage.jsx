@@ -10,9 +10,9 @@ const LandingPage = () => {
     const fetchProjects = async () => {
       try {
         const response = await fetch("https://project-promo-b-pt-module-4-team-2.onrender.com/api/projectCard"); // Llamada a tu backend
-        const data = await response.json();
-        console.log("Datos recibidos desde el backend:", data);
-        setProjects(data); // Actualizar el estado con los proyectos obtenidos
+        const infoObj = await response.json();
+        console.log("Datos recibidos desde el backend:", infoObj);
+        setProjects(infoObj.data); // Actualizar el estado con los proyectos obtenidos
         setLoading(false); // Desactivar el loading una vez obtenidos los datos
       } catch (error) {
         // console.error("Error fetching projects:", error);

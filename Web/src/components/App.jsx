@@ -17,11 +17,11 @@ function App() {
 	const [saveProjectSuccess, setSaveProjectSuccess] = useState("");
 	const [saveProjectFail, setSaveProjectFail] = useState("");
 	//Función guardar form en API
-
+//"https://project-promo-b-pt-module-4-team-2.onrender.com/api/projectCard",
 	const HandleCreateProject = () => {
 		fetch(
-			"http://localhost:4000/api/projectCard",
-
+			
+			'http://localhost:4000/api/projectCard',
 			{
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
@@ -36,7 +36,9 @@ function App() {
 					);
 					setSaveProjectSuccess("");
 				} else if (responseJson.success === true) {
-					setSaveProjectSuccess(responseJson.cardURL);
+					console.log(responseJson);
+					
+					setSaveProjectSuccess(`http://localhost:4000/api/projectCard/${responseJson.id}`);
 					setSaveProjectFail("");
 					resetInfo();
 				}
