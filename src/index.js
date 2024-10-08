@@ -1,10 +1,10 @@
 const getConnection = require('./db');
 const getServer = require('./server');
-const cors = require("cors");
+
 
 const server = getServer();
 
-server.use(cors());
+
 server.get('/api/projectCard', async (req, res) => {
   const conn = await getConnection();
   if (!conn) {
