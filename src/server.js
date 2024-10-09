@@ -14,7 +14,7 @@ function getServer() {
     console.log(`Servidor iniciado escuchando en http://localhost:${port}`);
   });
   server.use(express.static("./public"));
-  server.render(express.static('./docs/css'));
+  server.use(express.static("./docs/css"));
   return server;
 }
 

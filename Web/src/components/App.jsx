@@ -36,7 +36,6 @@ function App() {
 					);
 					setSaveProjectSuccess("");
 				} else if (responseJson.success === true) {
-					console.log(responseJson);
 					
 					setSaveProjectSuccess(`http://localhost:4000/api/projectCard/${responseJson.id}`);
 					setSaveProjectFail("");
@@ -90,7 +89,6 @@ function App() {
 	};
 
 	const handleInput = (ev) => {
-		console.log(ev.currentTarget);
 		const key = ev.currentTarget.name;
 		const newInfo = { ...info, [key]: ev.currentTarget.value };
 		setInfo(newInfo);
