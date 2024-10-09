@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Proyectos_molones</title>
+  </head>
+  <body>
+    <section className="preview landingPageCard">
+      <article className="card" key="{project.id_proyecto}">
+        <h2 className="card__projectTitle">
+          <span className="card__projectTitle--text">
+            <%=data.nombre_proyecto%>
+          </span>
+        </h2>
+
+        <div className="card__author">
+          <p className="card__job"><%=data.trabajo%></p>
+          <div className="card__authorPhoto"><%=data.foto_autora%></div>
+
+          <h3 className="card__name"><%=data.nombre_autora%></h3>
+        </div>
+
+        <div className="card__project">
+          <h3 className="card__name"><%=data.nombre_proyecto%></h3>
+          <p className="card__slogan"><%=data.slogan%></p>
+          <h3 className="card__descriptionTitle">Descripción</h3>
+          <p className="card__description"><%=data.descripcion%></p>
+
+          <div className="card__technicalInfo">
+            <p className="card__technologies"><%=data.tecnologias%></p>
+
+            <a
+              className="icon icon__www"
+              href="<%=data.demo%>"
+              title="Haz click para ver el proyecto online"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Web link
+            </a>
+            <a
+              className="icon icon__github"
+              href="<%=data.repositorio%>"
+              title="Haz click para ver el código del proyecto"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub link
+            </a>
+          </div>
+        </div>
+      </article>
+    </section>
+  </body>
+</html>
