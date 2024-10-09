@@ -45,8 +45,6 @@ server.post('/api/projectCard', async(req, res) => {
     await conn.commit();
     res.json({ success: true, id: proyectResults.insertId });
   } catch (err) {
-    console.log(err);
-    
     await conn.rollback();
     res.status(400).json({ success: false });
   }
