@@ -30,9 +30,7 @@ const LandingPage = () => {
     <div className="landing-page">
       <section className="hero">
         <h2 className="title">Proyectos molones</h2>
-        <p className="hero__text">
-          Vitrina de sombras para coleccionar ideas en la penumbra digital
-        </p>
+        <p className="hero__text">Vitrina para coleccionar ideas digitales</p>
       </section>
       <Link to="/create" className="button--link">
         Nuevo proyecto
@@ -45,7 +43,6 @@ const LandingPage = () => {
             <article className="card" key={project.id_proyecto}>
               <h2 className="card__projectTitle">
                 <span className="card__projectTitle--text">
-                  
                   {project.nombre_proyecto}
                 </span>
               </h2>
@@ -89,6 +86,12 @@ const LandingPage = () => {
                     GitHub link
                   </a>
                 </div>
+                <button
+                  className="button--delete"
+                  onClick={() => handleDeleteProject(project.id_proyecto)}
+                >
+                  Eliminar
+                </button>
               </div>
             </article>
           ))}
