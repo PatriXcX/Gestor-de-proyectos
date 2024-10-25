@@ -16,8 +16,6 @@ import { HashRouter as Router, Routes, Route } from "react-router-dom";
 function App() {
   const [saveProjectSuccess, setSaveProjectSuccess] = useState("");
   const [saveProjectFail, setSaveProjectFail] = useState("");
-  // DELETE const [projects, setProjects] = useState([]); // Asegúrate de tener este estado para los proyectos
-
   //Función guardar form en API
   //"https://project-promo-b-pt-module-4-team-2.onrender.com/api/projectCard",
   const HandleCreateProject = () => {
@@ -42,35 +40,6 @@ function App() {
         }
       });
   };
-
-  //DELETE
-
-  /*const handleDeleteProject = async (projectId) => {
-    try {
-      // Realiza la petición DELETE al servidor
-      const response = await fetch(
-        `http://localhost:4000/api/projectCard/${projectId}`,
-        {
-          method: "DELETE",
-        }
-      );
-      const data = await response.json();
-
-      if (data.success) {
-        // Actualiza el estado de projects para quitar el proyecto eliminado
-        setProjects(
-          projects.filter((project) => project.id_proyecto !== projectId)
-        );
-        console.log("Proyecto eliminado con éxito.");
-      } else {
-        console.error("Error al eliminar el proyecto:", data.error);
-      }
-    } catch (error) {
-      console.error("Error en la solicitud de eliminación:", error);
-    }
-  };*/
-
-  //DELETE
 
   const resetInfo = () => {
     const newInfo = {
@@ -129,16 +98,7 @@ function App() {
         <Header />
         <main className="main">
           <Routes>
-            <Route
-              path="/"
-              element={
-                <LandingPage
-                  info={info}
-                  projects={projects}
-                  handleDeleteProject={handleDeleteProject}
-                />
-              }
-            />
+            <Route path="/" element={<LandingPage info={info} />} />
             <Route
               path="/create"
               element={
