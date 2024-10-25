@@ -57,7 +57,6 @@ server.post("/api/projectCard", async (req, res) => {
     await conn.commit();
     res.json({ success: true, id: proyectResults.insertId });
   } catch (err) {
-
     await conn.rollback();
     res.status(400).json({ success: false });
   }
@@ -87,3 +86,42 @@ server.get("/api/projectCard/:id", async (req, res) => {
   }
   await conn.close();
 });
+
+/* Endpoint para eliminar un proyecto por ID
+server.delete("/api/projectCard/:id", async (req, res) => {
+  const conn = await getConnection();
+  if (!conn) {
+    res.status(500).json({ success: false, error: "Error con la conexión." });
+    return;
+  }
+
+  const projectId = req.params.id; // Obtener el ID del proyecto desde los parámetros de la URL
+
+  try {
+    // Iniciar una transacción
+    await conn.beginTransaction();
+
+    // Eliminar el proyecto correspondiente
+    const [deleteResults] = await conn.query(
+      "DELETE FROM proyectos WHERE idproyectos = ?",
+      [projectId]
+    );
+
+    if (deleteResults.affectedRows > 0) {
+      await conn.commit();
+      res.json({ success: true });
+    } else {
+      await conn.rollback();
+      res
+        .status(404)
+        .json({ success: false, error: "Proyecto no encontrado." });
+    }
+  } catch (err) {
+    await conn.rollback();
+    res
+      .status(500)
+      .json({ success: false, error: "Error al eliminar el proyecto." });
+  }
+
+  await conn.close();
+});*/

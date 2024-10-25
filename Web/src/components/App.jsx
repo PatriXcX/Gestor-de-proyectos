@@ -14,177 +14,193 @@ import LandingPage from "./Sections/LandingPage";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
-	const [saveProjectSuccess, setSaveProjectSuccess] = useState("");
-	const [saveProjectFail, setSaveProjectFail] = useState("");
-	//Función guardar form en API
-//"https://project-promo-b-pt-module-4-team-2.onrender.com/api/projectCard",
-	const HandleCreateProject = () => {
-		fetch(
-			
-			'http://localhost:4000/api/projectCard',
-			{
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(info),
-			}
-		)
-			.then((response) => response.json())
-			.then((responseJson) => {
-				if (responseJson.success === false) {
-					setSaveProjectFail(
-						`Ha sucedido un error al crear la tarjeta: ${responseJson.error}`
-					);
-					setSaveProjectSuccess("");
-				} else if (responseJson.success === true) {
-					
-					setSaveProjectSuccess(`http://localhost:4000/api/projectCard/${responseJson.id}`);
-					setSaveProjectFail("");
-					resetInfo();
-				}
-			});
-	};
+  const [saveProjectSuccess, setSaveProjectSuccess] = useState("");
+  const [saveProjectFail, setSaveProjectFail] = useState("");
+  // DELETE const [projects, setProjects] = useState([]); // Asegúrate de tener este estado para los proyectos
 
-	const resetInfo = () => {
-		const newInfo = {
-			name: "",
-			slogan: "",
-			repo: "",
-			demo: "",
-			technologies: "",
-			desc: "",
-			autor: "",
-			job: "",
-			image: "",
-			photo: "",
-		};
-		setInfo(newInfo);
-		localStorage.setItem("formInfo", JSON.stringify(newInfo));
-	};
+  //Función guardar form en API
+  //"https://project-promo-b-pt-module-4-team-2.onrender.com/api/projectCard",
+  const HandleCreateProject = () => {
+    fetch("http://localhost:4000/api/projectCard", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(info),
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        if (responseJson.success === false) {
+          setSaveProjectFail(
+            `Ha sucedido un error al crear la tarjeta: ${responseJson.error}`
+          );
+          setSaveProjectSuccess("");
+        } else if (responseJson.success === true) {
+          setSaveProjectSuccess(
+            `http://localhost:4000/api/projectCard/${responseJson.id}`
+          );
+          setSaveProjectFail("");
+          resetInfo();
+        }
+      });
+  };
 
-	const [info, setInfo] = useState({
-		name: "",
-		slogan: "",
-		repo: "",
-		demo: "",
-		technologies: "",
-		desc: "",
-		autor: "",
-		job: "",
-		image: "",
-		photo: "",
-	});
+  //DELETE
 
-	useEffect(() => {
-		const info = localStorage.getItem("formInfo");
-		if (info) {
-			setInfo(JSON.parse(info));
-		}
-	}, []);
+  /*const handleDeleteProject = async (projectId) => {
+    try {
+      // Realiza la petición DELETE al servidor
+      const response = await fetch(
+        `http://localhost:4000/api/projectCard/${projectId}`,
+        {
+          method: "DELETE",
+        }
+      );
+      const data = await response.json();
 
-	// Función subir imagenes buttons form en API
-	const updateImages = (key, image) => {
-		const newInfo = { ...info, [key]: image };
-		setInfo(newInfo);
-		localStorage.setItem("formInfo", JSON.stringify(newInfo));
-	};
+      if (data.success) {
+        // Actualiza el estado de projects para quitar el proyecto eliminado
+        setProjects(
+          projects.filter((project) => project.id_proyecto !== projectId)
+        );
+        console.log("Proyecto eliminado con éxito.");
+      } else {
+        console.error("Error al eliminar el proyecto:", data.error);
+      }
+    } catch (error) {
+      console.error("Error en la solicitud de eliminación:", error);
+    }
+  };*/
 
-	const handleInput = (ev) => {
-		const key = ev.currentTarget.name;
-		const newInfo = { ...info, [key]: ev.currentTarget.value };
-		setInfo(newInfo);
-		localStorage.setItem("formInfo", JSON.stringify(newInfo));
-	};
+  //DELETE
 
-	return (
-		<Router>
-			<div className="container">
-				<Header />
-				<main className="main">
-					<Routes>
-						<Route path="/" element={<LandingPage info={info} />} />
-						<Route
-							path="/create"
-							element={
-								<>
-									<section className="hero">
-										<h2 className="title">
-											Proyectos molones
-										</h2>
-										<p className="hero__text">
-											Vitrina de sombras para coleccionar
-											ideas en la penumbra digital
-										</p>
-										<a className="button--link" href="./">
-											Ver proyectos
-										</a>
-									</section>
-									<div className="preview_and_form_container">
-										<Preview info={info} />
-										<form className="addForm">
-											<Info
-												info={info}
-												handleInput={handleInput}
-											/>
-											<fieldset className="addForm__group--upload">
-												<InfoBtns
-													infoKey="image"
-													updateImage={updateImages}
-												>
-													Subir foto del proyecto
-												</InfoBtns>
-												<InfoBtns
-													infoKey="photo"
-													updateImage={updateImages}
-												>
-													Subir foto de la autora
-												</InfoBtns>
-												<CreateBtns
-													onClick={
-														HandleCreateProject
-													}
-												>
-													Guardar Proyecto
-												</CreateBtns>
-											</fieldset>
-											<div className="message">
-												{saveProjectFail && (
-													<p style={{ color: "red" }}>
-														{saveProjectFail}
-													</p>
-												)}
-												{saveProjectSuccess && (
-													<p
-														style={{
-															color: "white",
-														}}
-													>
-														Proyecto subido
-														exitosamente. Puedes
-														verlo aquí:{" "}
-														<a
-															className="linkProyect"
-															href={
-																saveProjectSuccess
-															}
-															target="_blank"
-															rel="noopener noreferrer"
-														>
-															{saveProjectSuccess}
-														</a>
-													</p>
-												)}
-											</div>
-										</form>
-									</div>
-								</>
-							}
-						/>
-					</Routes>
-				</main>
-				<Footer />
-			</div>
-		</Router>
-	);
+  const resetInfo = () => {
+    const newInfo = {
+      name: "",
+      slogan: "",
+      repo: "",
+      demo: "",
+      technologies: "",
+      desc: "",
+      autor: "",
+      job: "",
+      image: "",
+      photo: "",
+    };
+    setInfo(newInfo);
+    localStorage.setItem("formInfo", JSON.stringify(newInfo));
+  };
+
+  const [info, setInfo] = useState({
+    name: "",
+    slogan: "",
+    repo: "",
+    demo: "",
+    technologies: "",
+    desc: "",
+    autor: "",
+    job: "",
+    image: "",
+    photo: "",
+  });
+
+  useEffect(() => {
+    const info = localStorage.getItem("formInfo");
+    if (info) {
+      setInfo(JSON.parse(info));
+    }
+  }, []);
+
+  // Función subir imagenes buttons form en API
+  const updateImages = (key, image) => {
+    const newInfo = { ...info, [key]: image };
+    setInfo(newInfo);
+    localStorage.setItem("formInfo", JSON.stringify(newInfo));
+  };
+
+  const handleInput = (ev) => {
+    const key = ev.currentTarget.name;
+    const newInfo = { ...info, [key]: ev.currentTarget.value };
+    setInfo(newInfo);
+    localStorage.setItem("formInfo", JSON.stringify(newInfo));
+  };
+
+  return (
+    <Router>
+      <div className="container">
+        <Header />
+        <main className="main">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <LandingPage
+                  info={info}
+                  projects={projects}
+                  handleDeleteProject={handleDeleteProject}
+                />
+              }
+            />
+            <Route
+              path="/create"
+              element={
+                <>
+                  <section className="hero">
+                    <h2 className="title">Proyectos molones</h2>
+                    <p className="hero__text">
+                      Vitrina de sombras para coleccionar ideas en la penumbra
+                      digital
+                    </p>
+                    <a className="button--link" href="./">
+                      Ver proyectos
+                    </a>
+                  </section>
+                  <div className="preview_and_form_container">
+                    <Preview info={info} />
+                    <form className="addForm">
+                      <Info info={info} handleInput={handleInput} />
+                      <fieldset className="addForm__group--upload">
+                        <InfoBtns infoKey="image" updateImage={updateImages}>
+                          Subir foto del proyecto
+                        </InfoBtns>
+                        <InfoBtns infoKey="photo" updateImage={updateImages}>
+                          Subir foto de la autora
+                        </InfoBtns>
+                        <CreateBtns onClick={HandleCreateProject}>
+                          Guardar Proyecto
+                        </CreateBtns>
+                      </fieldset>
+                      <div className="message">
+                        {saveProjectFail && (
+                          <p style={{ color: "red" }}>{saveProjectFail}</p>
+                        )}
+                        {saveProjectSuccess && (
+                          <p
+                            style={{
+                              color: "white",
+                            }}
+                          >
+                            Proyecto subido exitosamente. Puedes verlo aquí:{" "}
+                            <a
+                              className="linkProyect"
+                              href={saveProjectSuccess}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {saveProjectSuccess}
+                            </a>
+                          </p>
+                        )}
+                      </div>
+                    </form>
+                  </div>
+                </>
+              }
+            />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </Router>
+  );
 }
 
 export default App;
