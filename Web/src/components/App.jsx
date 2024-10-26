@@ -16,8 +16,9 @@ import { HashRouter as Router, Routes, Route } from "react-router-dom";
 function App() {
   const [saveProjectSuccess, setSaveProjectSuccess] = useState("");
   const [saveProjectFail, setSaveProjectFail] = useState("");
+
   //Función guardar form en API
-  //"https://project-promo-b-pt-module-4-team-2.onrender.com/api/projectCard",
+
   const HandleCreateProject = () => {
     fetch("http://localhost:4000/api/projectCard", {
       method: "POST",
@@ -109,7 +110,7 @@ function App() {
                       Vitrina de sombras para coleccionar ideas en la penumbra
                       digital
                     </p>
-                    <a className="button--link" href="./">
+                    <a className="button--large" href="./">
                       Ver proyectos
                     </a>
                   </section>

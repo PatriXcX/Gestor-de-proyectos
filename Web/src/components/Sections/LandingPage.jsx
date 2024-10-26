@@ -57,7 +57,7 @@ function LandingPage() {
         <h2 className="title">Proyectos molones</h2>
         <p className="hero__text">Vitrina para coleccionar ideas digitales</p>
       </section>
-      <Link to="/create" className="button--link">
+      <Link to="/create" className="button--large">
         Nuevo proyecto
       </Link>
 

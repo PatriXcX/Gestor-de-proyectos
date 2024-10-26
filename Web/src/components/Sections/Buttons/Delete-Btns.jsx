@@ -7,7 +7,7 @@ function DeleteBtns({ onClick, children }) {
   };
   return (
     <>
-      <button onClick={handleClick} className="button--large">
+      <button onClick={handleClick} className="button--delete">
         {children}
       </button>
     </>
