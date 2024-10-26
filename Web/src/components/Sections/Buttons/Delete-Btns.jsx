@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-function CreateBtns({ onClick, children }) {
+function DeleteBtns({ onClick, children }) {
   const handleClick = (ev) => {
     ev.preventDefault();
     onClick();
@@ -14,9 +14,9 @@ function CreateBtns({ onClick, children }) {
   );
 }
 
-CreateBtns.propTypes = {
+DeleteBtns.propTypes = {
   onClick: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 };
 
-export default CreateBtns;
+export default DeleteBtns;

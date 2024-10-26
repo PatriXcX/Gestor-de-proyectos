@@ -86,3 +86,37 @@ server.get("/api/projectCard/:id", async (req, res) => {
   }
   await conn.close();
 });
+
+// Eliminar proyecto por ID
+
+server.delete("/api/projectCard/:id", async (req, res) => {
+  const conn = await getConnection();
+  if (!conn) {
+    res.status(500).json({ success: false, error: "Error con la conexion." });
+    return;
+  }
+
+  const projectId = req.params.id;
+
+  try {
+    const [results] = await conn.query(
+      "DELETE FROM proyectos WHERE idproyectos = ?",
+      [projectId]
+    );
+
+    if (results.affectedRows > 0) {
+      res.json({ success: true, message: "Proyecto eliminado con éxito" });
+    } else {
+      res
+        .status(404)
+        .json({ success: false, message: "Proyecto no encontrado" });
+    }
+  } catch (error) {
+    console.error("Error al eliminar el proyecto:", error);
+    res
+      .status(500)
+      .json({ success: false, error: "Error al eliminar el proyecto" });
+  } finally {
+    await conn.close();
+  }
+});

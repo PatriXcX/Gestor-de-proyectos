@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import DeleteBtns from "./Buttons/Delete-Btns";
 
-const LandingPage = () => {
+function LandingPage() {
   const [projects, setProjects] = useState([]); // Estado para guardar los proyectos
   const [loading, setLoading] = useState(true); // Estado para manejar el loading
 
@@ -20,6 +21,30 @@ const LandingPage = () => {
 
     fetchProjects();
   }, []); // Se ejecuta solo una vez al montar el componente
+
+  // Función para eliminar un proyecto
+  const handleDeleteProject = async (projectId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:4000/api/projectCard/${projectId}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (response.ok) {
+        // Si se elimina correctamente, actualizamos el estado
+        setProjects((prevProjects) =>
+          prevProjects.filter((project) => project.idproyectos !== projectId)
+        );
+        console.log("Proyecto eliminado con éxito");
+      } else {
+        console.error("Error al eliminar el proyecto");
+      }
+    } catch (error) {
+      console.error("Error al eliminar el proyecto:", error);
+    }
+  };
 
   // Si está cargando, mostramos un mensaje
   if (loading) {
@@ -71,7 +96,7 @@ const LandingPage = () => {
                     className="icon icon__www"
                     href={project.demo}
                     title="Haz click para ver el proyecto online"
-                    target="_blank"
+                    target="_bl ank"
                     rel="noopener noreferrer"
                   >
                     Web link
@@ -86,12 +111,11 @@ const LandingPage = () => {
                     GitHub link
                   </a>
                 </div>
-                <button
-                  className="button--delete"
-                  onClick={() => handleDeleteProject(project.id_proyecto)}
+                <DeleteBtns
+                  onClick={() => handleDeleteProject(project.idproyectos)}
                 >
                   Eliminar
-                </button>
+                </DeleteBtns>
               </div>
             </article>
           ))}
@@ -101,6 +125,6 @@ const LandingPage = () => {
       )}
     </div>
   );
-};
+}
 
 export default LandingPage;
